@@ -1,4 +1,4 @@
-package com.joango.springDetachmentDemo.service
+package com.joango.springDetachmentDemo.services
 
 import com.joango.springDetachmentDemo.domain.DomainDataEvent
 import mu.KotlinLogging
