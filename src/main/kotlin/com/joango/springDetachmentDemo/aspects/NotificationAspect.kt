@@ -1,7 +1,8 @@
 package com.joango.springDetachmentDemo.aspects
 
 import com.joango.springDetachmentDemo.domain.DomainDataEvent
-import com.joango.springDetachmentDemo.services.NotificationHandlerService
+import com.joango.springDetachmentDemo.services.DomainDataEventHandler
+import mu.KotlinLogging
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.After
 import org.aspectj.lang.annotation.Aspect
@@ -10,23 +11,18 @@ import org.springframework.stereotype.Component
 @Component
 @Aspect
 class NotificationAspect (
-    val notificationHandlerService: NotificationHandlerService
+    val domainDataEventHandler: DomainDataEventHandler
 ) {
-    @After("execution(* com.joango.springDetachmentDemo.services.SomeDomainDataService.someCaseAHappens(..))")
-    private fun someCaseAHappens(joinPoint: JoinPoint) {
-        joinPoint.args
-            .filterIsInstance<DomainDataEvent>()
-            .forEach {
-                notificationHandlerService.processDomainData(it)
-            }
-    }
 
-    @After("execution(* com.joango.springDetachmentDemo.services.SomeDomainDataService.someCaseBHappens(..))")
-    private fun someCaseBHappens(joinPoint: JoinPoint) {
+    private final val logger = KotlinLogging.logger {}
+
+    @After("execution(* *someCase*(..))")
+    private fun someCaseAHappens(joinPoint: JoinPoint) {
+        logger.info { "Aspect executed for ${joinPoint.signature}" }
         joinPoint.args
             .filterIsInstance<DomainDataEvent>()
             .forEach {
-                notificationHandlerService.somethingHappenedOnCaseBThatNeedsSpecialLogic(it)
+                domainDataEventHandler.processDomainData(it)
             }
     }
 }

@@ -5,7 +5,7 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class NotificationHandlerService {
+class DomainDataEventHandler {
     private final val logger = KotlinLogging.logger {}
 
     private var eventsProcessed = mutableListOf<DomainDataEvent>()
@@ -13,10 +13,6 @@ class NotificationHandlerService {
     fun processDomainData(domainDataEvent: DomainDataEvent) {
         logger.info { "Processing domain data on detached service" }
         eventsProcessed.add(domainDataEvent)
-    }
-
-    fun somethingHappenedOnCaseBThatNeedsSpecialLogic(domainDataEvent: DomainDataEvent) {
-        logger.info { "Event got propagated through aspect $domainDataEvent" }
     }
 
     fun clearEventsProcessed() {

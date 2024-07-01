@@ -6,9 +6,7 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class SomeDomainDataService (
-    val domainDataEventPublisher: DomainDataEventPublisher
-) {
+class SomeDomainDataService {
     private final val logger = KotlinLogging.logger {}
 
     fun someCaseAHappens(domainDataEvent: DomainDataEvent) {
@@ -19,6 +17,20 @@ class SomeDomainDataService (
     fun someCaseBHappens(domainDataEvent: DomainDataEvent) {
         logger.info { "Something happened and case B is called " +
                 "with domain data event" }
-        domainDataEventPublisher.publishSomeDomainDataEvent(domainDataEvent)
+    }
+
+    fun someCaseCHappens(domainDataEvent: DomainDataEvent) {
+        logger.info { "Something happened and case C is called " +
+                "with domain data event" }
+    }
+
+    fun someCaseDHappens(domainDataEvent: DomainDataEvent) {
+        logger.info { "Something happened and case D is called " +
+                "with domain data event" }
+    }
+
+    fun someCaseEHappens(domainDataEvent: DomainDataEvent) {
+        logger.info { "Something happened and case E is called " +
+                "with domain data event" }
     }
 }

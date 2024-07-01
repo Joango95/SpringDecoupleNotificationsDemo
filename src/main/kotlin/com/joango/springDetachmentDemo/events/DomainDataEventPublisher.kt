@@ -7,7 +7,6 @@ import mu.KotlinLogging
 import org.springframework.context.annotation.DependsOn
 
 @Service
-@DependsOn("DomainDataEventListener")
 class DomainDataEventPublisher(
     private val eventPublisher: ApplicationEventPublisher
 ) {
