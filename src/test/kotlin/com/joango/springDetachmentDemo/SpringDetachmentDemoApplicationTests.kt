@@ -1,8 +1,9 @@
 package com.joango.springDetachmentDemo
 
 import com.joango.springDetachmentDemo.domain.DomainDataEvent
-import com.joango.springDetachmentDemo.event.DomainDataEventPublisher
-import com.joango.springDetachmentDemo.service.DetachedService
+import com.joango.springDetachmentDemo.events.DomainDataEventPublisher
+import com.joango.springDetachmentDemo.services.NotificationHandlerService
+import com.joango.springDetachmentDemo.services.SomeDomainDataService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,23 +13,32 @@ import kotlin.test.assertEquals
 class SpringDetachmentDemoApplicationTests {
 
 	@Autowired
-	lateinit var domainDataEventPublisher: DomainDataEventPublisher
+	lateinit var notificationHandlerService: NotificationHandlerService
 
 	@Autowired
-	lateinit var detachedService: DetachedService
+	lateinit var someDomainDataService: SomeDomainDataService
 
 	@Test
-	fun contextLoads() {
+	fun contextLoads() {}
+
+	@Test
+	fun testAspectDataPropagation() {
+		val myNewDomainDataEvent = DomainDataEvent("oneValue", 12345)
+
+		someDomainDataService.someCaseAHappens(myNewDomainDataEvent)
+
+		assertEquals(1, notificationHandlerService.getEventsProcessedSize())
+		assert(notificationHandlerService.getEventsProcessedList().contains(myNewDomainDataEvent))
+		notificationHandlerService.clearEventsProcessed()
 	}
 
 	@Test
 	fun testEventListener() {
-		val myNewDomainDataEvent = DomainDataEvent("oneValue", 12345)
+		val myNewDomainDataEvent = DomainDataEvent("twoValue", 1234567)
 
-		domainDataEventPublisher.publishSomeDomainDataEvent(myNewDomainDataEvent)
+		someDomainDataService.someCaseBHappens(myNewDomainDataEvent)
 
-		assertEquals(1, detachedService.eventsProcessed.size)
-		assert(detachedService.eventsProcessed.contains(myNewDomainDataEvent))
+		assertEquals(1, notificationHandlerService.getEventsProcessedSize())
+		assert(notificationHandlerService.getEventsProcessedList().contains(myNewDomainDataEvent))
 	}
-
 }

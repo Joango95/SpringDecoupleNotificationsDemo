@@ -23,6 +23,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+	implementation("org.springframework:spring-aop:6.1.10")
+	implementation("org.springframework:spring-aspects:6.1.10")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")

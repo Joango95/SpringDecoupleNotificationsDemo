@@ -1,16 +1,14 @@
-package com.joango.springDetachmentDemo.event
+package com.joango.springDetachmentDemo.events
 
 import com.joango.springDetachmentDemo.domain.DomainDataEvent
-import com.joango.springDetachmentDemo.service.DetachedService
+import com.joango.springDetachmentDemo.services.NotificationHandlerService
 import mu.KotlinLogging
 import org.springframework.context.event.EventListener
-import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
-@Component
-@Order(1)
+@Component("DomainDataEventListener")
 class DomainDataEventListener (
-    val detachedService: DetachedService
+    val notificationHandlerService: NotificationHandlerService
 ){
 
     private val logger = KotlinLogging.logger {}
@@ -23,6 +21,6 @@ class DomainDataEventListener (
     fun listenDomainDataEvent(event: DomainDataEvent) {
         logger.info { "Listening event for domain data: " +
                 "$event" }
-        detachedService.processDomainData(event)
+        notificationHandlerService.processDomainData(event)
     }
 }
