@@ -7,9 +7,12 @@ import com.joango.springDetachmentDemo.services.SomeDomainDataService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.event.ApplicationEvents
+import org.springframework.test.context.event.RecordApplicationEvents
 import kotlin.test.assertEquals
 
 @SpringBootTest
+@RecordApplicationEvents
 class SpringDetachmentDemoApplicationTests {
 
 	@Autowired
@@ -20,6 +23,9 @@ class SpringDetachmentDemoApplicationTests {
 
 	@Autowired
 	lateinit var someDomainDataService: SomeDomainDataService
+
+	@Autowired
+	lateinit var events: ApplicationEvents
 
 	@Test
 	fun contextLoads() {}
@@ -54,5 +60,8 @@ class SpringDetachmentDemoApplicationTests {
 		val myNewDomainDataEvent = DomainDataEvent("twoValue", 987654)
 
 		publishSomeDomainDataEvent.publishSomeDomainDataEvent(myNewDomainDataEvent)
+
+		val eventsPublished = events.stream(DomainDataEvent::class.java).count()
+		assertEquals(eventsPublished, 1)
 	}
 }
