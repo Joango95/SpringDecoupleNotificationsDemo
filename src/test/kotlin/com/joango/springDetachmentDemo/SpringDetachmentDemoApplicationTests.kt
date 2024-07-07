@@ -26,16 +26,26 @@ class SpringDetachmentDemoApplicationTests {
 
 	@Test
 	fun testAspectDataPropagation() {
-		val myNewDomainDataEvent = DomainDataEvent("oneValue", 12345)
+		val myNewDomainDataEventOne = DomainDataEvent("ValueOne", 1)
+		val myNewDomainDataEventTwo = DomainDataEvent("ValueTwo", 2)
+		val myNewDomainDataEventThree = DomainDataEvent("ValueThree", 3)
+		val myNewDomainDataEventFour = DomainDataEvent("ValueFour", 4)
+		val myNewDomainDataEventFive = DomainDataEvent("ValueFive", 5)
 
-		someDomainDataService.someCaseAHappens(myNewDomainDataEvent)
-		someDomainDataService.someCaseBHappens(myNewDomainDataEvent)
-		someDomainDataService.someCaseCHappens(myNewDomainDataEvent)
-		someDomainDataService.someCaseDHappens(myNewDomainDataEvent)
-		someDomainDataService.someCaseEHappens(myNewDomainDataEvent)
+		someDomainDataService.someCaseAHappens(myNewDomainDataEventOne)
+		someDomainDataService.someCaseBHappens(myNewDomainDataEventTwo)
+		someDomainDataService.someCaseCHappens(myNewDomainDataEventThree)
+		someDomainDataService.someCaseDHappens(myNewDomainDataEventFour)
+		someDomainDataService.someCaseEHappens(myNewDomainDataEventFive)
 
 		assertEquals(5, domainDataEventHandler.getEventsProcessedSize())
-		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEvent))
+
+		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEventOne))
+		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEventTwo))
+		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEventThree))
+		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEventFour))
+		assert(domainDataEventHandler.getEventsProcessedList().contains(myNewDomainDataEventFive))
+
 		domainDataEventHandler.clearEventsProcessed()
 	}
 

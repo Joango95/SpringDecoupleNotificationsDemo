@@ -11,7 +11,9 @@ class DomainDataEventHandler {
     private var eventsProcessed = mutableListOf<DomainDataEvent>()
 
     fun processDomainData(domainDataEvent: DomainDataEvent) {
-        logger.info { "Processing domain data on detached service" }
+        logger.info { "Processing domain data on detached service: " +
+                "${domainDataEvent.firstProperty}, ${domainDataEvent.secondProperty}"
+        }
         eventsProcessed.add(domainDataEvent)
     }
 
