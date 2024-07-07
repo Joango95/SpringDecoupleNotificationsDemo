@@ -44,8 +44,5 @@ class SpringDetachmentDemoApplicationTests {
 		val myNewDomainDataEvent = DomainDataEvent("twoValue", 987654)
 
 		publishSomeDomainDataEvent.publishSomeDomainDataEvent(myNewDomainDataEvent)
-
-		/*assertEquals(1, notificationHandlerService.getEventsProcessedSize())
-		assert(notificationHandlerService.getEventsProcessedList().contains(myNewDomainDataEvent))*/
 	}
 }
